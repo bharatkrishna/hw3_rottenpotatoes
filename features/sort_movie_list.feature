@@ -22,10 +22,16 @@ Background: movies have been added to database
   And I am on the RottenPotatoes home page
 
 Scenario: sort movies alphabetically 
+  When I check the following ratings: G,PG,PG-13,NC-17,R
+  And I press "Refresh"
+  Then I should see all the movies
   When I follow "Movie Title"
   Then I should see "Chicken Run" before "The Incredibles" on the Rotten Potatoes home page
 
 Scenario: sort movies in increasing order of release date
+  When I check the following ratings: G,PG,PG-13,NC-17,R
+  And I press "Refresh"
+  Then I should see all the movies
   When I follow "Release Date"
   Then I should see "2001: A Space Odyssey" before "Chicken Run" on the Rotten Potatoes home page
 
