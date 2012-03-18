@@ -1,5 +1,4 @@
 # Add a declarative step here for populating the DB with movies.
-
 Given /the following movies exist/ do |movies_table|
   movies_table.hashes.each do |movie|
     # each returned element will be a hash whose key is the table header.
@@ -38,13 +37,17 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
       end
     end  
 end
+
 Then /I should see "(.*)" and "(.*)"/ do |e1,e2|
   assert (page.has_content?("#{e1}") and page.has_content?("#{e2}")),"Error in Filtering"
-  assert page.has_no_content?("Chocolat")
-  #assert (e1!="Chicken Run" and e2!="The Help"), "Error in Filtering"
+  assert (page.has_no_content?("Chocolat") and page.has_no_content?("2001: A Space Odyssey")),"Error in Filtering"
 end
-Then /I should see all the movies/ do 
-	
-	#assert all("tr").count==11
 
+Then /I should see all the movies/ do 
+	assert all("tr").count == Movie.count, "All movies not seen"
 end
+
+Then /I should not see any movie/ do
+  assert all("tr").count == 1, "Movies are seen"
+end
+
